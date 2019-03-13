@@ -30,7 +30,7 @@ public class TomcatJdbcPool {
 	@Value("#{spring.datasource.password}")
 	private String password;
 
-	private TomcatJdbcPool(String dbName) {
+	public TomcatJdbcPool() {
 		init();
 	}
 
@@ -74,12 +74,12 @@ public class TomcatJdbcPool {
 		if (pool.get(dbName) == null) {
 			synchronized (TomcatJdbcPool.class) {
 				if (pool.get(dbName) == null) {
-					pool.put(dbName, new TomcatJdbcPool(dbName));
+					pool.put(dbName, new TomcatJdbcPool());
 				}
 			}
-		}else {
+		} else {
 			if(isNull(pool.get(dbName).getConnection())){
-				pool.put(dbName, new TomcatJdbcPool(dbName));
+				pool.put(dbName, new TomcatJdbcPool());
 			}
 		}
 		return pool.get(dbName);
